@@ -1,28 +1,23 @@
-<section class="px-4 py-2">
-<h2 class="text-2xl font-thin">登入</h2>
+<section class="px-4 py-2"> 
+<h2 class="text-2xl font-thin">註冊</h2>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-
   <div class="field">
-    <%= f.label :email,class:'block' %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email",class:'px-3 py-2 text-lgborder border-gray-400 rounded-sm' %>
+    <%= f.label :email,class:'label' %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class:'input' %>
+  </div>
+  <div class="field">
+    <%= f.label :password,class:'label' %>
+    <%= f.password_field :password, autocomplete: "new-password",class:'input' %>
   </div>
 
   <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.label :password_confirmation,class:'label' %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",class:'input' %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="actions mt-2">
+    <%= f.submit "Sign up",class:'button' %>
   </div>
 <% end %>
 
