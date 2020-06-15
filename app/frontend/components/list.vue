@@ -4,8 +4,10 @@
    <div class="deck">
      <Card v-for="card in cards" :card="card" :key="card.id"></Card>
      <div class="input-area">
-       <textarea class="content" v-model="content"></textarea>
-       <button class="button" @click="createCard">新增卡片</button>
+       <button v-if="!editing" class="button bg-gray-400" @click="newCard">新增卡片</button>
+       <textarea v-if="editing" class="content" v-model="content"></textarea>
+       <button class="button bg-green-400" v-if="editing" @click="createCard">建立卡片</button>
+        <button class="button bg-gray-400" v-if="editing" @click="editing = false">取消</button>
      </div>
    </div>
  </div>
@@ -21,10 +23,15 @@ export default {
   data:function(){
     return{
       content:'',
-      cards:this.list.cards
+      cards:this.list.cards,
+      editing:false
     }
   },
   methods:{
+    newCard(event){
+      event.preventDefault();
+      this.editing = true;
+    },
     createCard(event){
       event.preventDefault();
       let data = new FormData();
@@ -41,6 +48,7 @@ export default {
           console.log(resp);
           this.cards.push(resp)
           this.content = "";
+          this.editing = false;
         },
         error:err =>{
           console.log(err);
