@@ -21,6 +21,9 @@ import 'styles'
 
 import Vue from 'vue/dist/vue.esm'
 import List from 'components/list';
+import Rails from '@rails/ujs'
+import draggable from 'vuedraggable';
+
 
 document.addEventListener('turbolinks:load',function(event){
     let el = document.querySelector('#board');
@@ -31,7 +34,28 @@ document.addEventListener('turbolinks:load',function(event){
             data:{
                 lists: JSON.parse(el.dataset.lists)
             },
-            components:{List}
+            components:{List,draggable},
+            methods: {
+                listMoved(e){
+                    console.log(this.lists[e.moved.newIndex].id);
+
+                    let data = new FormData();
+                    data.append("list[position]",e.moved.newIndex + 1)
+
+                    Rails.ajax({
+                        url:`/lists/${this.lists[e.moved.newIndex].id}/move`,
+                        type:'PUT',
+                        data,
+                        dataType:'json',
+                        success:resp =>{
+                            console.log(resp)
+                        },
+                        error:err =>{
+                            console.log(err);
+                        }
+                    })
+                }
+            },
         });
     }
 
