@@ -3,38 +3,25 @@ class CardsController < ApplicationController
 
   # GET /cards
   # GET /cards.json
-  def index
-    @cards = Card.all
-  end
 
   def move
     @card.update(card_params)
     render 'show.json'
   end
 
-  # GET /cards/1
-  # GET /cards/1.json
-  def show
-  end
-
-  # GET /cards/new
-  def new
-    @card = Card.new
-  end
-
-  # GET /cards/1/edit
-  def edit
-  end
-
   # POST /cards
   # POST /cards.json
   def create
     @card = Card.new(card_params)
-
+    # if @card.save
+    #   @test = @card
+    #   render json: @card
+    # end
     respond_to do |format|
       if @card.save
-        format.html { redirect_to @card, notice: 'Card was successfully created.' }
         format.json { render :show, status: :created, location: @card }
+        format.html { redirect_to @card, notice: 'Card was successfully created.' }
+       
       else
         format.html { render :new }
         format.json { render json: @card.errors, status: :unprocessable_entity }
@@ -47,8 +34,8 @@ class CardsController < ApplicationController
   def update
     respond_to do |format|
       if @card.update(card_params)
-        format.html { redirect_to @card, notice: 'Card was successfully updated.' }
         format.json { render :show, status: :ok, location: @card }
+        format.html { redirect_to @card, notice: 'Card was successfully updated.' }
       else
         format.html { render :edit }
         format.json { render json: @card.errors, status: :unprocessable_entity }

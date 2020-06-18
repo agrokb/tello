@@ -10,8 +10,12 @@
   </head>
 
   <body>
+   <section class="flex flex-col h-screen bg-red-100 overflow-hidden">
     <%= render 'shared/navbar'%>
     <%= render 'shared/flash' if notice %>
-    <%= yield %>
+    <div class="overflow-auto bg-blue-300 h-full">
+      <%= yield %>
+    </div>
+  </section>
   </body>
 </html>
